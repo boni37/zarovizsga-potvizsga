@@ -1,5 +1,7 @@
 package hu.nive.ujratervezes.zarovizsga.peoplesql;
 
+import org.mariadb.jdbc.MariaDbDataSource;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,18 +17,20 @@ public class PeopleDao {
     }
 
     public String findIpByName(String firstName, String lastName) {
-        String ip_address = "";
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select first_name, last_name, ip_address from people where first_name=? and last_name=? ");
+        String result = "";
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("select ip_address from people where first_name=? and last_name=?");
             statement.setString(1, firstName);
             statement.setString(2, lastName);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                ip_address = rs.getString("ip_address");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getString("ip_address");
             }
+            return result;
+
         } catch (SQLException sqlException) {
-            throw new IllegalStateException("Can not read data", sqlException);
+            throw new IllegalStateException("Can not open database", sqlException);
         }
-        return ip_address;
     }
 }

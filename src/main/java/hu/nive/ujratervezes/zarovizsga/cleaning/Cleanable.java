@@ -6,6 +6,7 @@ public interface Cleanable {
 
     String getAddress();
 
-    BuildingType getType();
+    String getType();
+
 
 }

@@ -2,39 +2,37 @@ package hu.nive.ujratervezes.zarovizsga.cleaning;
 
 public class Office implements Cleanable {
 
-    private String address;
-    private int floorspace;
-    private int floor;
+    String address;
+    int area;
+    int level;
+    String type;
 
-
-    public Office(String address, int floorspace, int floor) {
+    public Office(String address, int area, int level) {
         this.address = address;
-        this.floorspace = floorspace;
-        this.floor = floor;
+        this.area = area;
+        this.level = level;
+        this.type = "Office";
     }
 
-    public int getFloorspace() {
-        return floorspace;
+    public int getArea() {
+        return area;
     }
 
-    public int getFloor() {
-        return floor;
+    public int getLevel() {
+        return level;
     }
 
-    @Override
-    public String getAddress() {
-        return address;
-    }
-
-    @Override
-    public BuildingType getType() {
-        return BuildingType.OFFICE;
+    public String getType() {
+        return type;
     }
 
     @Override
     public int clean() {
-        return 100 * floorspace * floor;
+        return area * level * 100;
     }
 
-
+    @Override
+    public String getAddress() {
+        return address + ", ";
+    }
 }

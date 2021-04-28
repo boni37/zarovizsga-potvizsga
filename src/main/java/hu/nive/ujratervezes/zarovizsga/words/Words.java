@@ -1,16 +1,16 @@
 package hu.nive.ujratervezes.zarovizsga.words;
 
 public class Words {
-
-    private String countPattern = "0123456789";
-
     public boolean hasMoreDigits(String s) {
-        int count = 0;
-        for (char ch : s.toCharArray()) {
-            if (countPattern.contains(String.valueOf(ch))) {
-                count += 1;
+        int countDigit = 0;
+        int countOther = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                countDigit += 1;
+            } else {
+                countOther += 1;
             }
         }
-        return count > s.length() / 2;
+        return countDigit > countOther;
     }
 }

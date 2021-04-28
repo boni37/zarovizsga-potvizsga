@@ -2,68 +2,67 @@ package hu.nive.ujratervezes.zarovizsga.cleaning;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class CleaningService {
 
-    List<Cleanable> cleanables = new ArrayList<>();
+    List<Cleanable> service = new ArrayList<>();
 
     public CleaningService() {
     }
 
-    public CleaningService(List<Cleanable> cleanables) {
-        this.cleanables = cleanables;
+
+    public List<Cleanable> getService() {
+        return service;
+    }
+
+    public void add(Cleanable cleanable) {
+        service.add(cleanable);
+    }
+
+    public List<Cleanable> getCleanables() {
+        return service;
     }
 
     public int cleanAll() {
-        int price = 0;
-        for (Cleanable actual : cleanables) {
-            price += actual.clean();
+        int costOfCleanining = 0;
+        List<Cleanable> removable = new ArrayList<>();
+        for (Cleanable cleanable : service) {
+            costOfCleanining += cleanable.clean();
+            removable.add(cleanable);
         }
-        cleanables.clear();
-        return price;
-    }
-
-
-    public List<Cleanable> getCleanables() {
-        return cleanables;
+        service.removeAll(removable);
+        return costOfCleanining;
     }
 
     public int cleanOnlyOffices() {
-        int price = 0;
-        Iterator<Cleanable> iterator = cleanables.iterator();
-        while (iterator.hasNext()) {
-            Cleanable cleanable = iterator.next();
-            if (cleanable.getType() == BuildingType.OFFICE) {
-                price += cleanable.clean();
-                iterator.remove();
+        int costOfCleanining = 0;
+        List<Cleanable> removable = new ArrayList<>();
+        for (Cleanable cleanable : service) {
+            if (cleanable.getType().equals("Office")) {
+                costOfCleanining += cleanable.clean();
+                removable.add(cleanable);
             }
         }
-        return price;
+        service.removeAll(removable);
+        return costOfCleanining;
     }
 
-    public List<Cleanable> findByAddressPart(String addressPart) {
-        List<Cleanable> result = new ArrayList<>();
-        for (Cleanable cleanable : cleanables) {
-            if (cleanable.getAddress().contains(addressPart)) {
-                result.add(cleanable);
+    public List<Cleanable> findByAddressPart(String address) {
+        List<Cleanable> removable = new ArrayList<>();
+        for (Cleanable cleanable : service) {
+            if (cleanable.getAddress().contains(address)) {
+                removable.add(cleanable);
             }
         }
-        return result;
+        return removable;
     }
 
     public String getAddresses() {
         StringBuilder sb = new StringBuilder();
-        sb.append(cleanables.get(0).getAddress());
-        for (int i = 1; i < cleanables.size(); i++) {
-            sb.append(", ");
-            sb.append(cleanables.get(i).getAddress());
+        for (Cleanable cleanable : service) {
+            sb.append(cleanable.getAddress());
         }
-        return sb.toString();
-    }
-
-    public void add(Cleanable cleanable) {
-        cleanables.add(cleanable);
+        return sb.toString().substring(0, sb.toString().length() - 2);
     }
 }

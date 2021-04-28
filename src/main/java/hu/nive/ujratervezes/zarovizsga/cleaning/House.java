@@ -2,32 +2,31 @@ package hu.nive.ujratervezes.zarovizsga.cleaning;
 
 public class House implements Cleanable {
 
-    private String address;
-    private int floorspace;
+    String address;
+    int area;
+    String type;
 
-
-    public House(String address, int floorspace) {
+    public House(String address, int area) {
         this.address = address;
-        this.floorspace = floorspace;
+        this.area = area;
+        this.type = "House";
     }
 
+    public int getArea() {
+        return area;
+    }
 
-    public int getFloorspace() {
-        return floorspace;
+    public String getType() {
+        return type;
     }
 
     @Override
     public int clean() {
-        return 80 * floorspace;
+        return area * 80;
     }
 
     @Override
     public String getAddress() {
-        return address;
-    }
-
-    @Override
-    public BuildingType getType() {
-        return BuildingType.HOUSE;
+        return address + ", ";
     }
 }
