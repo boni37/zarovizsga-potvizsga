@@ -1,7 +1,6 @@
 package hu.nive.ujratervezes.zarovizsga.cleaning;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class CleaningService {
@@ -11,10 +10,6 @@ public class CleaningService {
     public CleaningService() {
     }
 
-
-    public List<Cleanable> getService() {
-        return service;
-    }
 
     public void add(Cleanable cleanable) {
         service.add(cleanable);
@@ -63,6 +58,6 @@ public class CleaningService {
         for (Cleanable cleanable : service) {
             sb.append(cleanable.getAddress());
         }
-        return sb.toString().substring(0, sb.toString().length() - 2);
+        return sb.substring(0, sb.toString().length() - 2);
     }
 }
